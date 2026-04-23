@@ -48,8 +48,7 @@ const features = [
   {
     icon: Cpu,
     title: "Processamento",
-    description:
-      "Processamento robusto de dados em tempo real, garantindo agilidade nas decisões.",
+    description: "Processamento robusto de dados em tempo real, garantindo agilidade nas decisões.",
   },
   {
     icon: Headphones,
@@ -69,8 +68,7 @@ const benefits = [
   {
     icon: Shield,
     title: "Segurança",
-    description:
-      "Criptografia de ponta, controle granular de acessos e conformidade com LGPD.",
+    description: "Criptografia de ponta, controle granular de acessos e conformidade com LGPD.",
   },
   {
     icon: Zap,
@@ -87,65 +85,61 @@ const benefits = [
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="absolute top-0 left-0 right-0 z-20">
-        <div className="container mx-auto px-6 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-gold to-gold-soft flex items-center justify-center shadow-[var(--shadow-gold)]">
-              <span className="text-navy-deep font-bold text-lg">O</span>
-            </div>
-            <span className="text-xl font-semibold tracking-tight">Ordixs</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-            <a href="#funcionalidades" className="hover:text-gold transition-colors">
-              Funcionalidades
-            </a>
-            <a href="#sobre" className="hover:text-gold transition-colors">
-              Sobre
-            </a>
-            <a href="#beneficios" className="hover:text-gold transition-colors">
-              Benefícios
-            </a>
-          </nav>
-          <button className="hidden md:inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium hover:border-gold hover:text-gold transition-all">
-            Entrar
-          </button>
-        </div>
-      </header>
-
-      {/* Hero */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Hero (dark) */}
+      <section className="relative min-h-[88vh] flex items-center overflow-hidden bg-navy-deep text-white">
         <div className="absolute inset-0">
           <img
             src={heroImage}
             alt="Prédios corporativos modernos ao entardecer"
             width={1920}
             height={1280}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-60"
           />
-          <div
-            className="absolute inset-0"
-            style={{ background: "var(--gradient-hero)" }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+          <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
         </div>
+
+        {/* Header inside hero */}
+        <header className="absolute top-0 left-0 right-0 z-20">
+          <div className="container mx-auto px-6 py-6 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-gold to-gold-soft flex items-center justify-center shadow-[var(--shadow-gold)]">
+                <span className="text-navy-deep font-bold text-lg">O</span>
+              </div>
+              <span className="text-xl font-semibold tracking-tight text-white">Ordixs</span>
+            </div>
+            <nav className="hidden md:flex items-center gap-8 text-sm text-white/70">
+              <a href="#funcionalidades" className="hover:text-gold transition-colors">
+                Funcionalidades
+              </a>
+              <a href="#sobre" className="hover:text-gold transition-colors">
+                Sobre
+              </a>
+              <a href="#beneficios" className="hover:text-gold transition-colors">
+                Benefícios
+              </a>
+            </nav>
+            <button className="hidden md:inline-flex items-center gap-2 rounded-lg border border-white/20 px-4 py-2 text-sm font-medium text-white hover:border-gold hover:text-gold transition-all">
+              Entrar
+            </button>
+          </div>
+        </header>
 
         <div className="container relative z-10 mx-auto px-6 py-32">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-navy-mid/50 backdrop-blur-sm px-4 py-1.5 mb-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-white/5 backdrop-blur-sm px-4 py-1.5 mb-8">
               <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
               <span className="text-xs font-medium text-gold-soft tracking-wider uppercase">
                 Plataforma Corporativa
               </span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-6 text-white">
               Gestão inteligente
               <br />
               <span className="bg-gradient-to-r from-gold to-gold-soft bg-clip-text text-transparent">
                 para sua empresa
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed">
+            <p className="text-lg md:text-xl text-white/75 max-w-2xl mb-10 leading-relaxed">
               Centralize e controle todas as operações do seu negócio em uma única plataforma.
               Cadastros, processos, atendimento e comercial integrados com sofisticação e
               segurança.
@@ -158,7 +152,7 @@ function Index() {
                 Começar agora
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </button>
-              <button className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card/30 backdrop-blur-sm px-8 py-4 text-base font-semibold hover:border-gold hover:text-gold transition-all">
+              <button className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 backdrop-blur-sm px-8 py-4 text-base font-semibold text-white hover:border-gold hover:text-gold transition-all">
                 Ver demonstração
               </button>
             </div>
@@ -166,14 +160,14 @@ function Index() {
         </div>
       </section>
 
-      {/* Features */}
-      <section id="funcionalidades" className="py-24 md:py-32">
+      {/* Features (white) */}
+      <section id="funcionalidades" className="py-24 md:py-32 bg-background">
         <div className="container mx-auto px-6">
           <div className="max-w-2xl mb-16">
-            <p className="text-sm font-medium text-gold tracking-wider uppercase mb-4">
+            <p className="text-xs font-semibold text-gold tracking-[0.2em] uppercase mb-4">
               Funcionalidades
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
               Tudo que sua empresa precisa em um só lugar
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
@@ -186,31 +180,28 @@ function Index() {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="group relative rounded-2xl border border-border bg-card p-8 shadow-[var(--shadow-card)] transition-all hover:border-gold/40 hover:-translate-y-1"
+                className="group relative rounded-2xl border border-border bg-card p-8 shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)] hover:border-gold/30"
               >
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-navy-deep border border-gold/20 mb-6 group-hover:border-gold/50 transition-colors">
-                    <feature.icon className="h-6 w-6 text-gold" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-surface border border-border mb-6 group-hover:bg-gold/10 group-hover:border-gold/40 transition-all">
+                  <feature.icon className="h-5 w-5 text-foreground group-hover:text-gold transition-colors" strokeWidth={1.75} />
                 </div>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* About */}
-      <section id="sobre" className="py-24 md:py-32 bg-navy-deep/40">
+      {/* About (off-white) */}
+      <section id="sobre" className="py-24 md:py-32 bg-surface">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="text-sm font-medium text-gold tracking-wider uppercase mb-4">
+              <p className="text-xs font-semibold text-gold tracking-[0.2em] uppercase mb-4">
                 Sobre o sistema
               </p>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 leading-tight text-foreground">
                 Eficiência, organização e controle em cada detalhe
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
@@ -227,56 +218,56 @@ function Index() {
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/90">{item}</span>
+                    <span className="text-foreground/85">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div className="relative">
-              <div
-                className="absolute -inset-4 rounded-3xl opacity-20 blur-3xl"
-                style={{ background: "var(--gradient-gold)" }}
-              />
+              <div className="absolute -inset-6 rounded-3xl bg-gold/10 blur-3xl" />
               <div className="relative rounded-2xl border border-border bg-card p-8 shadow-[var(--shadow-elegant)]">
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="rounded-xl bg-navy-deep/60 border border-border p-5">
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="rounded-xl bg-surface border border-border p-5">
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">
                       Operações
                     </p>
-                    <p className="text-3xl font-bold text-gold">98.7%</p>
+                    <p className="text-3xl font-bold text-foreground">98.7%</p>
                     <p className="text-xs text-muted-foreground mt-1">Disponibilidade</p>
                   </div>
-                  <div className="rounded-xl bg-navy-deep/60 border border-border p-5">
+                  <div className="rounded-xl bg-surface border border-border p-5">
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">
                       Processos
                     </p>
-                    <p className="text-3xl font-bold text-gold">+12k</p>
+                    <p className="text-3xl font-bold text-foreground">+12k</p>
                     <p className="text-xs text-muted-foreground mt-1">Por dia</p>
                   </div>
                 </div>
-                <div className="rounded-xl bg-navy-deep/60 border border-border p-5 mb-4">
+                <div className="rounded-xl bg-surface border border-border p-5 mb-4">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium">Performance mensal</p>
-                    <span className="text-xs text-gold">+24%</span>
+                    <p className="text-sm font-medium text-foreground">Performance mensal</p>
+                    <span className="text-xs font-semibold text-gold">+24%</span>
                   </div>
                   <div className="flex items-end gap-1.5 h-20">
                     {[40, 65, 50, 75, 60, 85, 95].map((h, i) => (
                       <div
                         key={i}
-                        className="flex-1 rounded-t bg-gradient-to-t from-gold/40 to-gold"
-                        style={{ height: `${h}%` }}
+                        className="flex-1 rounded-t"
+                        style={{
+                          height: `${h}%`,
+                          background: "var(--gradient-gold)",
+                        }}
                       />
                     ))}
                   </div>
                 </div>
-                <div className="rounded-xl bg-navy-deep/60 border border-border p-5">
+                <div className="rounded-xl bg-surface border border-border p-5">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium">Centralização ativa</p>
+                      <p className="text-sm font-medium text-foreground">Centralização ativa</p>
                       <p className="text-xs text-muted-foreground mt-1">Todos os módulos</p>
                     </div>
-                    <div className="h-10 w-10 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center">
+                    <div className="h-10 w-10 rounded-full bg-gold/15 border border-gold/30 flex items-center justify-center">
                       <CheckCircle2 className="h-5 w-5 text-gold" />
                     </div>
                   </div>
@@ -287,14 +278,14 @@ function Index() {
         </div>
       </section>
 
-      {/* Benefits */}
-      <section id="beneficios" className="py-24 md:py-32">
+      {/* Benefits (white) */}
+      <section id="beneficios" className="py-24 md:py-32 bg-background">
         <div className="container mx-auto px-6">
           <div className="max-w-2xl mx-auto text-center mb-16">
-            <p className="text-sm font-medium text-gold tracking-wider uppercase mb-4">
+            <p className="text-xs font-semibold text-gold tracking-[0.2em] uppercase mb-4">
               Benefícios
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
               Por que escolher o Ordixs
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
@@ -306,12 +297,15 @@ function Index() {
             {benefits.map((b) => (
               <div
                 key={b.title}
-                className="group rounded-2xl border border-border bg-card p-8 text-center shadow-[var(--shadow-card)] hover:border-gold/40 transition-all"
+                className="group rounded-2xl border border-border bg-card p-8 text-center shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] hover:border-gold/30 transition-all"
               >
-                <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-2xl mb-6 group-hover:scale-110 transition-transform" style={{ background: "var(--gradient-gold)" }}>
+                <div
+                  className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-2xl mb-6 group-hover:scale-110 transition-transform shadow-[var(--shadow-gold)]"
+                  style={{ background: "var(--gradient-gold)" }}
+                >
                   <b.icon className="h-7 w-7 text-navy-deep" strokeWidth={2} />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{b.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">{b.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{b.description}</p>
               </div>
             ))}
@@ -319,16 +313,14 @@ function Index() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24">
+      {/* CTA (off-white card on white) */}
+      <section className="py-12 md:py-20 bg-background">
         <div className="container mx-auto px-6">
-          <div className="relative overflow-hidden rounded-3xl border border-gold/20 bg-card p-12 md:p-16 text-center shadow-[var(--shadow-elegant)]">
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{ background: "var(--gradient-gold)" }}
-            />
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-surface p-12 md:p-16 text-center shadow-[var(--shadow-elegant)]">
+            <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-gold/10 blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-navy-deep/5 blur-3xl" />
             <div className="relative">
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
                 Eleve a gestão da sua empresa
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
@@ -346,20 +338,20 @@ function Index() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border py-12">
+      {/* Footer (dark) */}
+      <footer className="bg-navy-deep text-white/70 py-12">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-gold to-gold-soft flex items-center justify-center">
                 <span className="text-navy-deep font-bold">O</span>
               </div>
-              <span className="font-semibold tracking-tight">Ordixs</span>
+              <span className="font-semibold tracking-tight text-white">Ordixs</span>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm">
               © {new Date().getFullYear()} Ordixs. Todos os direitos reservados.
             </p>
-            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-6 text-sm">
               <a href="#" className="hover:text-gold transition-colors">
                 Privacidade
               </a>
