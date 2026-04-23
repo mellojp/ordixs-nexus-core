@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Lock, Server, Award } from "lucide-react";
 import heroImage from "@/assets/hero-buildings.jpg";
 
 export const Route = createFileRoute("/")({
@@ -36,6 +36,38 @@ const principles = [
   { label: "Centralização", value: "Visão única", description: "Toda a operação em uma interface coerente e silenciosa." },
 ];
 
+const plans = [
+  {
+    name: "Essencial",
+    tagline: "Para empresas em estruturação",
+    features: ["Módulos de cadastro e operações", "Até 10 usuários ativos", "Suporte em horário comercial", "Onboarding guiado"],
+  },
+  {
+    name: "Corporativo",
+    tagline: "Para operações em escala",
+    features: ["Todos os módulos integrados", "Usuários ilimitados", "Suporte prioritário 12×6", "Integrações personalizadas"],
+    featured: true,
+  },
+  {
+    name: "Sob medida",
+    tagline: "Para grupos e operações complexas",
+    features: ["Arquitetura dedicada", "SLA contratual personalizado", "Gerente de conta exclusivo", "Consultoria estratégica"],
+  },
+];
+
+const differentials = [
+  { title: "Interface silenciosa", description: "Desenhada para reduzir ruído e devolver foco ao que importa." },
+  { title: "Arquitetura modular", description: "Ative apenas o que sua operação precisa, expanda quando crescer." },
+  { title: "Inteligência operacional", description: "Indicadores e automações que antecipam decisões críticas." },
+  { title: "Implantação assistida", description: "Time dedicado para conduzir a transição com método e clareza." },
+];
+
+const credibility = [
+  { icon: Lock, label: "Segurança", title: "Criptografia AES-256", description: "Dados protegidos em trânsito e em repouso, com auditoria contínua." },
+  { icon: Server, label: "Infraestrutura", title: "99.98% uptime", description: "Operação estável com redundância geográfica e monitoramento 24/7." },
+  { icon: Award, label: "Conformidade", title: "LGPD & ISO 27001", description: "Padrões internacionais de governança e proteção de dados." },
+];
+
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
@@ -65,6 +97,7 @@ function Index() {
             <nav className="hidden md:flex items-center gap-10 text-sm font-light text-white/60">
               <a href="#plataforma" className="hover:text-white transition-colors">Plataforma</a>
               <a href="#modulos" className="hover:text-white transition-colors">Módulos</a>
+              <a href="#planos" className="hover:text-white transition-colors">Planos</a>
               <a href="#principios" className="hover:text-white transition-colors">Princípios</a>
             </nav>
             <button className="text-sm font-light text-white/80 hover:text-gold transition-colors">
@@ -103,7 +136,6 @@ function Index() {
           </div>
         </div>
 
-        {/* Bottom meta line */}
         <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/10">
           <div className="container mx-auto px-8 py-6 flex items-center justify-between text-[11px] font-light text-white/40 tracking-wider uppercase">
             <span>Versão 2025</span>
@@ -113,7 +145,7 @@ function Index() {
         </div>
       </section>
 
-      {/* Manifesto (light) */}
+      {/* Manifesto (white) */}
       <section id="plataforma" className="py-32 md:py-48 bg-background">
         <div className="container mx-auto px-8">
           <div className="max-w-4xl mx-auto">
@@ -145,7 +177,7 @@ function Index() {
       </section>
 
       {/* Modules (off-white) */}
-      <section id="modulos" className="py-32 md:py-44 bg-surface">
+      <section id="modulos" className="py-32 md:py-44 bg-surface border-y border-border/60">
         <div className="container mx-auto px-8">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-20 md:mb-28 max-w-6xl mx-auto">
             <div>
@@ -191,7 +223,6 @@ function Index() {
                   </p>
                 </div>
               ))}
-              {/* Filler card to complete the grid elegantly */}
               <div className="hidden lg:flex bg-card p-10 md:p-12 flex-col justify-end">
                 <div className="h-px w-8 bg-gold/60 mb-6" />
                 <p className="text-sm font-light text-foreground/50 leading-relaxed">
@@ -203,11 +234,118 @@ function Index() {
         </div>
       </section>
 
-      {/* Principles (white) */}
-      <section id="principios" className="py-32 md:py-48 bg-background">
+      {/* Differentials (white) */}
+      <section id="diferenciais" className="py-32 md:py-44 bg-background">
         <div className="container mx-auto px-8">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-24">
+            <div className="max-w-3xl mb-20 md:mb-28">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="h-px w-10 bg-gold/80" />
+                <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
+                  Diferenciais
+                </span>
+              </div>
+              <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-light tracking-tight text-foreground leading-[1.1]">
+                O que torna o Ordixs
+                <br />
+                <span className="italic font-extralight text-foreground/50">incomparável.</span>
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-x-16 gap-y-16">
+              {differentials.map((d, i) => (
+                <div key={d.title} className="flex gap-6">
+                  <span className="text-[11px] font-light text-gold tracking-[0.25em] pt-2 shrink-0">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="text-2xl font-light tracking-tight text-foreground mb-3">
+                      {d.title}
+                    </h3>
+                    <p className="text-base font-light text-foreground/60 leading-relaxed max-w-md">
+                      {d.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Plans (subtle beige) */}
+      <section id="planos" className="py-32 md:py-44 bg-surface-muted border-y border-border/60">
+        <div className="container mx-auto px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center max-w-2xl mx-auto mb-20 md:mb-24">
+              <div className="flex items-center justify-center gap-3 mb-8">
+                <div className="h-px w-10 bg-gold/80" />
+                <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
+                  Modalidades
+                </span>
+                <div className="h-px w-10 bg-gold/80" />
+              </div>
+              <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-light tracking-tight text-foreground leading-[1.1]">
+                Um modelo para
+                <br />
+                <span className="italic font-extralight text-foreground/50">cada estágio.</span>
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+              {plans.map((p) => (
+                <div
+                  key={p.name}
+                  className={`relative rounded-2xl p-10 md:p-12 transition-all flex flex-col ${
+                    p.featured
+                      ? "bg-navy-deep text-white shadow-[var(--shadow-elegant)]"
+                      : "bg-card text-foreground border border-border/60 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)]"
+                  }`}
+                >
+                  {p.featured && (
+                    <span className="absolute top-6 right-6 text-[10px] font-light text-gold tracking-[0.25em] uppercase">
+                      Recomendado
+                    </span>
+                  )}
+                  <p className={`text-[11px] font-light tracking-[0.25em] uppercase mb-6 ${p.featured ? "text-gold" : "text-gold"}`}>
+                    {p.name}
+                  </p>
+                  <h3 className={`text-2xl font-light tracking-tight mb-10 ${p.featured ? "text-white" : "text-foreground"}`}>
+                    {p.tagline}
+                  </h3>
+                  <ul className="space-y-4 mb-12 flex-1">
+                    {p.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3">
+                        <Check
+                          className={`h-4 w-4 mt-1 shrink-0 ${p.featured ? "text-gold" : "text-gold"}`}
+                          strokeWidth={1.5}
+                        />
+                        <span className={`text-sm font-light leading-relaxed ${p.featured ? "text-white/75" : "text-foreground/65"}`}>
+                          {f}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    className={`group inline-flex items-center gap-2 text-sm font-light transition-colors ${
+                      p.featured ? "text-gold-soft hover:text-gold" : "text-foreground hover:text-gold"
+                    }`}
+                  >
+                    Conversar com consultor
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Principles (white) */}
+      <section id="principios" className="py-32 md:py-44 bg-background">
+        <div className="container mx-auto px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center max-w-2xl mx-auto mb-20 md:mb-24">
               <div className="flex items-center justify-center gap-3 mb-8">
                 <div className="h-px w-10 bg-gold/80" />
                 <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
@@ -244,9 +382,59 @@ function Index() {
         </div>
       </section>
 
-      {/* CTA (dark, minimal) */}
-      <section className="py-32 md:py-44 bg-navy-deep text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30" style={{ background: "radial-gradient(ellipse at center, oklch(0.74 0.1 78 / 0.15), transparent 70%)" }} />
+      {/* Credibility (off-white) */}
+      <section className="py-32 md:py-44 bg-surface border-t border-border/60">
+        <div className="container mx-auto px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="max-w-3xl mb-20 md:mb-24">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="h-px w-10 bg-gold/80" />
+                <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
+                  Confiança
+                </span>
+              </div>
+              <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-light tracking-tight text-foreground leading-[1.1]">
+                Estabilidade que
+                <br />
+                <span className="italic font-extralight text-foreground/50">se sente.</span>
+              </h2>
+              <p className="text-base font-light text-foreground/60 leading-relaxed mt-8 max-w-xl">
+                Empresas que escolhem o Ordixs encontram uma plataforma onde segurança,
+                disponibilidade e conformidade são pressupostos — não diferenciais.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+              {credibility.map((c) => (
+                <div
+                  key={c.title}
+                  className="rounded-2xl bg-card border border-border/60 p-10 shadow-[var(--shadow-card)]"
+                >
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-surface-muted mb-10">
+                    <c.icon className="h-4 w-4 text-foreground/70" strokeWidth={1.5} />
+                  </div>
+                  <p className="text-[11px] font-light text-gold tracking-[0.25em] uppercase mb-4">
+                    {c.label}
+                  </p>
+                  <h3 className="text-xl font-light tracking-tight text-foreground mb-3">
+                    {c.title}
+                  </h3>
+                  <p className="text-sm font-light text-foreground/55 leading-relaxed">
+                    {c.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA (dark) */}
+      <section className="py-32 md:py-48 bg-navy-deep text-white relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{ background: "radial-gradient(ellipse at center, oklch(0.74 0.1 78 / 0.18), transparent 70%)" }}
+        />
         <div className="container relative mx-auto px-8">
           <div className="max-w-3xl mx-auto text-center">
             <div className="flex items-center justify-center gap-3 mb-10">
@@ -256,18 +444,25 @@ function Index() {
               </span>
               <div className="h-px w-10 bg-gold/60" />
             </div>
-            <h2 className="text-[clamp(2rem,5vw,4rem)] font-light tracking-tight leading-[1.1] mb-10">
-              Eleve a gestão da
+            <h2 className="text-[clamp(2.25rem,5.5vw,4.5rem)] font-light tracking-tight leading-[1.05] mb-10">
+              A próxima geração da
               <br />
-              <span className="italic font-extralight text-gold-soft">sua empresa.</span>
+              <span className="italic font-extralight text-gold-soft">gestão corporativa.</span>
             </h2>
             <p className="text-lg font-light text-white/60 max-w-xl mx-auto mb-14 leading-relaxed">
-              Junte-se às empresas que escolheram operar com sofisticação.
+              Agende uma demonstração privada e descubra como o Ordixs eleva o padrão
+              operacional da sua empresa.
             </p>
-            <button className="group inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-medium text-navy-deep transition-all hover:bg-gold">
-              Começar agora
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
-            </button>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <button className="group inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-medium text-navy-deep transition-all hover:bg-gold">
+                Agendar demonstração
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+              </button>
+              <button className="group inline-flex items-center gap-2 text-sm font-light text-white/80 hover:text-gold transition-colors">
+                Falar com consultor
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} />
+              </button>
+            </div>
           </div>
         </div>
       </section>

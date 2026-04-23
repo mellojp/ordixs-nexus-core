@@ -80,8 +80,8 @@
   --gold-soft: oklch(0.85 0.07 82);
   --navy-deep: oklch(0.18 0.035 260);
   --navy-mid: oklch(0.24 0.04 260);
-  --surface: oklch(0.985 0.003 90);
-  --surface-muted: oklch(0.97 0.005 85);
+  --surface: oklch(0.978 0.005 85);
+  --surface-muted: oklch(0.955 0.008 80);
 
   --gradient-hero: linear-gradient(135deg, oklch(0.16 0.035 260 / 0.85), oklch(0.2 0.04 265 / 0.7));
   --gradient-gold: linear-gradient(135deg, oklch(0.78 0.1 82), oklch(0.7 0.1 76));
