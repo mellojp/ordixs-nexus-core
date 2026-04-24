@@ -1,6 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, Check, Lock, Server, Award } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BriefcaseBusiness,
+  ChevronDown,
+  Check,
+  Cpu,
+  Database,
+  Headset,
+  Workflow,
+} from "lucide-react";
 import heroImage from "@/assets/hero-buildings.jpg";
+import logoImage from "@/assets/logo.png";
+import differentialInterfaceImage from "@/assets/differential-interface.png";
+import differentialModularImage from "@/assets/differential-modular.png";
+import differentialIntelligenceImage from "@/assets/differential-intelligence.png";
+import differentialImplementationImage from "@/assets/differential-implementation.png";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -22,468 +47,751 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const modules = [
-  { number: "01", title: "Cadastro", description: "Clientes, fornecedores e equipes em um cadastro unificado e inteligente." },
-  { number: "02", title: "Operações", description: "Fluxos automatizados, auditáveis e desenhados para escala." },
-  { number: "03", title: "Processamento", description: "Dados em tempo real para decisões precisas e imediatas." },
-  { number: "04", title: "Atendimento", description: "Central integrada com histórico completo e métricas claras." },
-  { number: "05", title: "Comercial", description: "Pipeline e indicadores estratégicos para acelerar resultados." },
-];
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 },
+};
 
-const principles = [
-  { label: "Segurança", value: "Conformidade total", description: "Criptografia ponta a ponta, LGPD e controles granulares." },
-  { label: "Performance", value: "+70% mais ágil", description: "Automações que reduzem tempo de execução em processos críticos." },
-  { label: "Centralização", value: "Visão única", description: "Toda a operação em uma interface coerente e silenciosa." },
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
+
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const viewportOnce = { once: true, amount: 0.22 };
+const smoothTransition = { duration: 0.55, ease: "easeOut" };
+
+const modules = [
+  {
+    number: "01",
+    title: "Cadastro",
+    description: "Clientes, fornecedores e equipes em um cadastro unificado e inteligente.",
+    icon: Database,
+    accent: "Base unificada",
+    preview:
+      "Centraliza os registros essenciais da operação e mantém cada relacionamento com histórico, contexto e dados consistentes.",
+    details: ["Clientes e fornecedores", "Equipes e permissões", "Histórico cadastral"],
+  },
+  {
+    number: "02",
+    title: "Operações",
+    description: "Fluxos automatizados, auditáveis e desenhados para escala.",
+    icon: Workflow,
+    accent: "Orquestração contínua",
+    preview:
+      "Organiza rotinas recorrentes, distribui responsabilidades e torna cada etapa acompanhável sem depender de controles paralelos.",
+    details: ["Fluxos e etapas", "Responsáveis por processo", "Auditoria operacional"],
+  },
+  {
+    number: "03",
+    title: "Processamento",
+    description: "Dados em tempo real para decisões precisas e imediatas.",
+    icon: Cpu,
+    accent: "Leitura em tempo real",
+    preview:
+      "Processa informações críticas da empresa para transformar registros dispersos em leituras acionáveis e indicadores confiáveis.",
+    details: ["Consolidação de dados", "Indicadores em tempo real", "Regras de processamento"],
+  },
+  {
+    number: "04",
+    title: "Atendimento",
+    description: "Central integrada com histórico completo e métricas claras.",
+    icon: Headset,
+    accent: "Contato com contexto",
+    preview:
+      "Reúne interações, solicitações e contexto do cliente para que o atendimento seja mais rápido, preciso e rastreável.",
+    details: ["Histórico de contato", "Solicitações e retornos", "Métricas de atendimento"],
+  },
+  {
+    number: "05",
+    title: "Comercial",
+    description: "Pipeline e indicadores estratégicos para acelerar resultados.",
+    icon: BriefcaseBusiness,
+    accent: "Receita com visibilidade",
+    preview:
+      "Dá visibilidade ao funil comercial, acompanha oportunidades e conecta ações de venda aos indicadores da operação.",
+    details: ["Pipeline comercial", "Oportunidades e propostas", "Indicadores de receita"],
+  },
 ];
 
 const plans = [
   {
     name: "Essencial",
+    audience: "Estruturação",
     tagline: "Para empresas em estruturação",
-    features: ["Módulos de cadastro e operações", "Até 10 usuários ativos", "Suporte em horário comercial", "Onboarding guiado"],
+    summary: "Base ideal para organizar processos centrais com implantação rápida e baixo atrito.",
+    outcome: "Operação inicial padronizada e pronta para crescer com segurança.",
+    features: [
+      "Módulos de cadastro e operações",
+      "Até 10 usuários ativos",
+      "Suporte em horário comercial",
+      "Onboarding guiado",
+    ],
   },
   {
     name: "Corporativo",
+    audience: "Escala",
     tagline: "Para operações em escala",
-    features: ["Todos os módulos integrados", "Usuários ilimitados", "Suporte prioritário 12×6", "Integrações personalizadas"],
+    summary:
+      "Camada completa para empresas que já exigem integração ampla, governança e velocidade.",
+    outcome: "Mais fluidez operacional com visão consolidada entre áreas.",
+    features: [
+      "Todos os módulos integrados",
+      "Usuários ilimitados",
+      "Suporte prioritário 12×6",
+      "Integrações personalizadas",
+    ],
     featured: true,
   },
   {
     name: "Sob medida",
+    audience: "Complexidade",
     tagline: "Para grupos e operações complexas",
-    features: ["Arquitetura dedicada", "SLA contratual personalizado", "Gerente de conta exclusivo", "Consultoria estratégica"],
+    summary:
+      "Modelo consultivo para grupos que precisam de arquitetura dedicada e desenho específico.",
+    outcome: "Adoção com aderência máxima aos requisitos operacionais e contratuais.",
+    features: [
+      "Arquitetura dedicada",
+      "SLA contratual personalizado",
+      "Gerente de conta exclusivo",
+      "Consultoria estratégica",
+    ],
   },
 ];
 
 const differentials = [
-  { title: "Interface silenciosa", description: "Desenhada para reduzir ruído e devolver foco ao que importa." },
-  { title: "Arquitetura modular", description: "Ative apenas o que sua operação precisa, expanda quando crescer." },
-  { title: "Inteligência operacional", description: "Indicadores e automações que antecipam decisões críticas." },
-  { title: "Implantação assistida", description: "Time dedicado para conduzir a transição com método e clareza." },
-];
-
-const credibility = [
-  { icon: Lock, label: "Segurança", title: "Criptografia AES-256", description: "Dados protegidos em trânsito e em repouso, com auditoria contínua." },
-  { icon: Server, label: "Infraestrutura", title: "99.98% uptime", description: "Operação estável com redundância geográfica e monitoramento 24/7." },
-  { icon: Award, label: "Conformidade", title: "LGPD & ISO 27001", description: "Padrões internacionais de governança e proteção de dados." },
+  {
+    title: "Interface intuitiva",
+    description:
+      "Uma experiência desenhada para transformar rotinas complexas em jornadas claras, com leitura rápida, ações previsíveis e menos ruído para quem opera todos os dias.",
+    supporting:
+      "Cada tela prioriza contexto, foco e continuidade, ajudando equipes a trabalhar com mais precisão sem depender de treinamentos extensos ou processos paralelos.",
+    image: differentialInterfaceImage,
+  },
+  {
+    title: "Arquitetura modular",
+    description:
+      "A estrutura acompanha o ritmo da operação: comece pelo essencial, ative novos módulos quando fizer sentido e evolua sem reconstruir processos do zero.",
+    supporting:
+      "O crescimento acontece por camadas, preservando consistência entre áreas e evitando que a expansão da empresa se transforme em complexidade operacional.",
+    image: differentialModularImage,
+  },
+  {
+    title: "Inteligência operacional",
+    description:
+      "Indicadores, automações e leituras contextuais trabalham em conjunto para revelar prioridades, antecipar gargalos e sustentar decisões com mais precisão.",
+    supporting:
+      "A operação deixa de depender apenas de percepção individual e passa a contar com sinais objetivos para coordenar equipes, prazos e resultados.",
+    image: differentialIntelligenceImage,
+  },
+  {
+    title: "Implantação assistida",
+    description:
+      "A adoção é conduzida com método, proximidade e clareza, respeitando a maturidade da empresa e reduzindo atrito durante a transição.",
+    supporting:
+      "Do mapeamento inicial aos ajustes finais, o processo é orientado para aderência real à rotina, garantindo avanço seguro sem interromper a operação.",
+    image: differentialImplementationImage,
+  },
 ];
 
 function Index() {
+  const [selectedPlan, setSelectedPlan] = useState(plans.find((plan) => plan.featured) ?? plans[0]);
+  const [expandedModule, setExpandedModule] = useState(modules[0].number);
+  const [differentialsApi, setDifferentialsApi] = useState<CarouselApi>();
+  const [activeDifferential, setActiveDifferential] = useState(0);
+
+  useEffect(() => {
+    if (!differentialsApi) {
+      return;
+    }
+
+    const updateCurrentSlide = () => {
+      setActiveDifferential(differentialsApi.selectedScrollSnap());
+    };
+
+    updateCurrentSlide();
+    differentialsApi.on("select", updateCurrentSlide);
+    differentialsApi.on("reInit", updateCurrentSlide);
+
+    return () => {
+      differentialsApi.off("select", updateCurrentSlide);
+      differentialsApi.off("reInit", updateCurrentSlide);
+    };
+  }, [differentialsApi]);
+
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
-      {/* Hero (dark) */}
-      <section className="relative min-h-[100vh] flex items-center overflow-hidden bg-navy-deep text-white">
+      <section className="relative flex min-h-[100vh] items-center overflow-hidden bg-navy-deep text-white">
         <div className="absolute inset-0">
           <img
             src={heroImage}
             alt="Arquitetura corporativa contemporânea"
             width={1920}
             height={1280}
-            className="w-full h-full object-cover opacity-40"
+            className="h-full w-full object-cover opacity-40"
           />
           <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/50 to-transparent" />
         </div>
 
-        {/* Header */}
-        <header className="absolute top-0 left-0 right-0 z-20">
-          <div className="container mx-auto px-8 py-8 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-md border border-gold/40 flex items-center justify-center">
-                <span className="text-gold font-medium text-sm tracking-tight">O</span>
-              </div>
-              <span className="text-base font-medium tracking-tight text-white">Ordixs</span>
-            </div>
-            <nav className="hidden md:flex items-center gap-10 text-sm font-light text-white/60">
-              <a href="#plataforma" className="hover:text-white transition-colors">Plataforma</a>
-              <a href="#modulos" className="hover:text-white transition-colors">Módulos</a>
-              <a href="#planos" className="hover:text-white transition-colors">Planos</a>
-              <a href="#principios" className="hover:text-white transition-colors">Princípios</a>
+        <header className="absolute left-0 right-0 top-0 z-20 border-b border-white/8 bg-white/4 backdrop-blur-md">
+          <div className="container mx-auto flex items-center gap-6 px-6 py-5 md:px-8">
+            <a href="#" aria-label="Ordixs" className="shrink-0">
+              <img src={logoImage} alt="Ordixs" className="h-8 w-auto md:h-9" />
+            </a>
+
+            <nav className="ml-auto hidden items-center justify-end gap-10 text-sm font-light text-white/65 md:flex">
+              <a href="#plataforma" className="transition-colors hover:text-white">
+                Plataforma
+              </a>
+              <a href="#modulos" className="transition-colors hover:text-white">
+                Módulos
+              </a>
+              <a href="#planos" className="transition-colors hover:text-white">
+                Planos
+              </a>
             </nav>
-            <button className="text-sm font-light text-white/80 hover:text-gold transition-colors">
-              Acessar
-            </button>
           </div>
         </header>
 
-        <div className="container relative z-10 mx-auto px-8 pt-40 pb-32">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-3 mb-12">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
+          className="container relative z-10 mx-auto px-8 pb-24 pt-36 md:pb-28 md:pt-40"
+        >
+          <motion.div variants={fadeUp} transition={smoothTransition} className="max-w-4xl">
+            <div className="mb-12 flex items-center gap-3">
               <div className="h-px w-10 bg-gold/60" />
-              <span className="text-[11px] font-light text-gold tracking-[0.3em] uppercase">
+              <span className="text-[11px] font-light uppercase tracking-[0.3em] text-gold">
                 Plataforma Corporativa
               </span>
             </div>
-            <h1 className="text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-[1.02] mb-10 text-white">
+            <h1 className="mb-10 text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-[1.02] text-white">
               Conduza sua empresa
               <br />
-              <span className="italic font-extralight text-gold-soft">com clareza absoluta.</span>
+              <span className="font-extralight italic text-gold-soft">com clareza absoluta.</span>
             </h1>
-            <p className="text-lg md:text-xl font-light text-white/65 max-w-xl mb-14 leading-relaxed">
-              Uma plataforma silenciosa que unifica operações, processos e pessoas — desenhada
-              para empresas que valorizam excelência.
+            <p className="mb-14 max-w-xl text-lg font-light leading-relaxed text-white/65 md:text-xl">
+              Uma plataforma que unifica operações, processos e pessoas, desenhada para empresas que
+              valorizam excelência.
             </p>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <button className="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-navy-deep transition-all hover:bg-gold">
-                Começar agora
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
-              </button>
-              <button className="group inline-flex items-center gap-2 text-sm font-light text-white/80 hover:text-gold transition-colors">
-                Ver demonstração
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.5} />
+            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+              <a
+                href="https://portal.ordixs.com.br/login"
+                className="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-navy-deep transition-all hover:bg-gold"
+              >
+                Acessar sistema
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  strokeWidth={1.5}
+                />
+              </a>
+              <button className="group inline-flex items-center gap-2 text-sm font-light text-white/80 transition-colors hover:text-gold">
+                Conversar com consultor
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  strokeWidth={1.5}
+                />
               </button>
             </div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/10">
-          <div className="container mx-auto px-8 py-6 flex items-center justify-between text-[11px] font-light text-white/40 tracking-wider uppercase">
-            <span>Versão 2025</span>
-            <span className="hidden md:inline">Confiabilidade · Sofisticação · Performance</span>
-            <span>BR</span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* Manifesto (white) */}
-      <section id="plataforma" className="py-32 md:py-48 bg-background">
+      <section id="plataforma" className="relative overflow-hidden bg-background py-32 md:py-48">
+        {/* <div
+          className="pointer-events-none absolute left-[-10%] top-[-35%] hidden h-[170%] w-[82%] rounded-[10rem] blur-[2px] md:block"
+          style={{
+            background: "oklch(0.96 0.018 94)",
+            transform: "rotate(-37deg)",
+          }}
+        /> */}
         <div className="container mx-auto px-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex items-center gap-3 mb-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={fadeUp}
+            transition={smoothTransition}
+            className="relative z-10 mx-auto max-w-4xl"
+          >
+            <div className="mb-12 flex items-center gap-3">
               <div className="h-px w-10 bg-gold/80" />
-              <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
+              <span className="text-[11px] font-light uppercase tracking-[0.3em] text-foreground/50">
                 A plataforma
               </span>
             </div>
-            <h2 className="text-[clamp(2rem,5vw,4rem)] font-light leading-[1.1] tracking-tight text-foreground mb-12">
+            <h2 className="mb-12 text-[clamp(2rem,5vw,4rem)] font-light leading-[1.1] tracking-tight text-foreground">
               Tecnologia discreta.
               <br />
               <span className="text-foreground/40">Resultados evidentes.</span>
             </h2>
-            <div className="grid md:grid-cols-2 gap-12 md:gap-20 mt-20">
-              <p className="text-lg font-light text-foreground/70 leading-[1.7]">
-                Ordixs nasceu para empresas que entendem que a verdadeira sofisticação está
-                naquilo que não se nota — fluxos que simplesmente funcionam, decisões que
-                acontecem no tempo certo, equipes que operam em sintonia.
+            <div className="mt-20 grid gap-12 md:grid-cols-2 md:gap-20">
+              <p className="text-lg font-light leading-[1.7] text-foreground/70">
+                Ordixs nasceu para empresas que entendem que a verdadeira sofisticação está naquilo
+                que não se nota: fluxos que simplesmente funcionam, decisões que acontecem no tempo
+                certo, equipes que operam em sintonia.
               </p>
-              <p className="text-lg font-light text-foreground/70 leading-[1.7]">
-                Cada detalhe foi pensado para reduzir ruído. Cada interação, para devolver
-                tempo. Uma plataforma que se ajusta à maturidade do seu negócio sem impor
-                complexidade desnecessária.
+              <p className="text-lg font-light leading-[1.7] text-foreground/70">
+                Cada detalhe foi pensado para reduzir ruído. Cada interação, para devolver tempo.
+                Uma plataforma que se ajusta à maturidade do seu negócio sem impor complexidade
+                desnecessária.
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Modules (off-white) */}
-      <section id="modulos" className="py-32 md:py-44 bg-surface border-y border-border/60">
+      <section id="modulos" className="border-y border-border/60 bg-surface py-32 md:py-44">
         <div className="container mx-auto px-8">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-20 md:mb-28 max-w-6xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={fadeUp}
+            transition={smoothTransition}
+            className="mx-auto mb-20 flex max-w-6xl flex-col gap-8 md:mb-28 md:flex-row md:items-end md:justify-between"
+          >
             <div>
-              <div className="flex items-center gap-3 mb-8">
+              <div className="mb-8 flex items-center gap-3">
                 <div className="h-px w-10 bg-gold/80" />
-                <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
+                <span className="text-[11px] font-light uppercase tracking-[0.3em] text-foreground/50">
                   Módulos
                 </span>
               </div>
-              <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-light tracking-tight text-foreground leading-[1.1] max-w-2xl">
-                Cinco módulos.
+              <h2 className="max-w-2xl text-[clamp(2rem,4.5vw,3.5rem)] font-light leading-[1.1] tracking-tight text-foreground">
+                Múltiplos módulos.
                 <br />
                 <span className="text-foreground/40">Uma única operação.</span>
               </h2>
             </div>
-            <p className="text-base font-light text-foreground/60 max-w-sm leading-relaxed">
-              Tudo o que sua empresa precisa para operar com fluidez, integrado em uma
-              única plataforma.
+            <p className="max-w-sm text-base font-light leading-relaxed text-foreground/60">
+              Tudo o que sua empresa precisa para operar com fluidez, integrado em uma única
+              plataforma.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border/60 rounded-2xl overflow-hidden">
-              {modules.map((m) => (
-                <div
-                  key={m.number}
-                  className="group relative bg-card p-10 md:p-12 transition-all hover:bg-background"
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={stagger}
+            className="mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-[var(--shadow-card)]"
+          >
+            {modules.map((module) => {
+              const isExpanded = expandedModule === module.number;
+
+              return (
+                <motion.article
+                  key={module.number}
+                  layout="position"
+                  variants={fadeUp}
+                  transition={smoothTransition}
+                  className="border-b border-border/60 last:border-b-0"
                 >
-                  <div className="flex items-start justify-between mb-16">
-                    <span className="text-[11px] font-light text-foreground/40 tracking-[0.2em]">
-                      {m.number}
-                    </span>
-                    <ArrowUpRight
-                      className="h-4 w-4 text-foreground/30 group-hover:text-gold group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all"
-                      strokeWidth={1.25}
-                    />
-                  </div>
-                  <h3 className="text-2xl font-light tracking-tight mb-4 text-foreground">
-                    {m.title}
-                  </h3>
-                  <p className="text-sm font-light text-foreground/55 leading-relaxed">
-                    {m.description}
-                  </p>
-                </div>
-              ))}
-              <div className="hidden lg:flex bg-card p-10 md:p-12 flex-col justify-end">
-                <div className="h-px w-8 bg-gold/60 mb-6" />
-                <p className="text-sm font-light text-foreground/50 leading-relaxed">
-                  Integrações sob medida e expansão modular conforme sua operação evolui.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Differentials (white) */}
-      <section id="diferenciais" className="py-32 md:py-44 bg-background">
-        <div className="container mx-auto px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="max-w-3xl mb-20 md:mb-28">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="h-px w-10 bg-gold/80" />
-                <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
-                  Diferenciais
-                </span>
-              </div>
-              <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-light tracking-tight text-foreground leading-[1.1]">
-                O que torna o Ordixs
-                <br />
-                <span className="italic font-extralight text-foreground/50">incomparável.</span>
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-x-16 gap-y-16">
-              {differentials.map((d, i) => (
-                <div key={d.title} className="flex gap-6">
-                  <span className="text-[11px] font-light text-gold tracking-[0.25em] pt-2 shrink-0">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="text-2xl font-light tracking-tight text-foreground mb-3">
-                      {d.title}
-                    </h3>
-                    <p className="text-base font-light text-foreground/60 leading-relaxed max-w-md">
-                      {d.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Plans (subtle beige) */}
-      <section id="planos" className="py-32 md:py-44 bg-surface-muted border-y border-border/60">
-        <div className="container mx-auto px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-20 md:mb-24">
-              <div className="flex items-center justify-center gap-3 mb-8">
-                <div className="h-px w-10 bg-gold/80" />
-                <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
-                  Modalidades
-                </span>
-                <div className="h-px w-10 bg-gold/80" />
-              </div>
-              <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-light tracking-tight text-foreground leading-[1.1]">
-                Um modelo para
-                <br />
-                <span className="italic font-extralight text-foreground/50">cada estágio.</span>
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-              {plans.map((p) => (
-                <div
-                  key={p.name}
-                  className={`relative rounded-2xl p-10 md:p-12 transition-all flex flex-col ${
-                    p.featured
-                      ? "bg-navy-deep text-white shadow-[var(--shadow-elegant)]"
-                      : "bg-card text-foreground border border-border/60 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)]"
-                  }`}
-                >
-                  {p.featured && (
-                    <span className="absolute top-6 right-6 text-[10px] font-light text-gold tracking-[0.25em] uppercase">
-                      Recomendado
-                    </span>
-                  )}
-                  <p className={`text-[11px] font-light tracking-[0.25em] uppercase mb-6 ${p.featured ? "text-gold" : "text-gold"}`}>
-                    {p.name}
-                  </p>
-                  <h3 className={`text-2xl font-light tracking-tight mb-10 ${p.featured ? "text-white" : "text-foreground"}`}>
-                    {p.tagline}
-                  </h3>
-                  <ul className="space-y-4 mb-12 flex-1">
-                    {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-3">
-                        <Check
-                          className={`h-4 w-4 mt-1 shrink-0 ${p.featured ? "text-gold" : "text-gold"}`}
-                          strokeWidth={1.5}
-                        />
-                        <span className={`text-sm font-light leading-relaxed ${p.featured ? "text-white/75" : "text-foreground/65"}`}>
-                          {f}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
                   <button
-                    className={`group inline-flex items-center gap-2 text-sm font-light transition-colors ${
-                      p.featured ? "text-gold-soft hover:text-gold" : "text-foreground hover:text-gold"
+                    type="button"
+                    aria-expanded={isExpanded}
+                    onClick={() => setExpandedModule(isExpanded ? "" : module.number)}
+                    className={`group grid w-full gap-6 p-8 text-left transition-colors md:grid-cols-[0.3fr_1fr_0.24fr] md:items-center md:p-9 ${
+                      isExpanded ? "bg-surface" : "hover:bg-surface/70"
                     }`}
                   >
-                    Conversar com consultor
-                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} />
+                    <div className="flex items-center gap-4">
+                      <span
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-background text-gold transition-colors ${
+                          isExpanded
+                            ? "border-gold/25"
+                            : "border-border/70 group-hover:border-gold/25"
+                        }`}
+                      >
+                        <module.icon className="h-4 w-4" strokeWidth={1.45} />
+                      </span>
+                      <h3 className="text-2xl font-light tracking-tight text-foreground">
+                        {module.title}
+                      </h3>
+                    </div>
+
+                    <p className="text-sm font-light leading-7 text-foreground/58">
+                      {module.description}
+                    </p>
+
+                    <div className="flex items-center justify-between gap-4 md:justify-end">
+                      <p className="text-[10px] font-light uppercase tracking-[0.24em] text-gold/90 md:text-right">
+                        {module.accent}
+                      </p>
+                      <ChevronDown
+                        className={`h-4 w-4 shrink-0 text-foreground/28 transition-all duration-300 group-hover:text-gold ${
+                          isExpanded ? "rotate-180 text-gold" : ""
+                        }`}
+                        strokeWidth={1.35}
+                      />
+                    </div>
                   </button>
-                </div>
+
+                  <AnimatePresence initial={false}>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.42, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="border-t border-border/50 bg-background/45 px-8 pb-8 pt-7 md:px-9 md:pb-9">
+                          <div className="grid gap-8 rounded-[1.25rem] border border-border/60 bg-card/70 p-6 md:grid-cols-[1fr_0.9fr] md:p-7">
+                            <div>
+                              <p className="mb-4 text-[10px] font-light uppercase tracking-[0.24em] text-gold/90">
+                                Preview do módulo
+                              </p>
+                              <p className="max-w-2xl text-sm font-light leading-7 text-foreground/62">
+                                {module.preview}
+                              </p>
+                            </div>
+
+                            <div>
+                              <p className="mb-4 text-[10px] font-light uppercase tracking-[0.24em] text-foreground/34">
+                                Principais frentes
+                              </p>
+                              <div className="flex flex-wrap gap-2.5">
+                                {module.details.map((detail) => (
+                                  <span
+                                    key={detail}
+                                    className="rounded-full border border-border/70 bg-background px-3.5 py-2 text-xs font-light text-foreground/60"
+                                  >
+                                    {detail}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.article>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      <section id="diferenciais" className="bg-background py-32 md:py-44">
+        <div className="container mx-auto mb-20 px-8 md:mb-28">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={fadeUp}
+            transition={smoothTransition}
+            className="max-w-3xl"
+          >
+            <div className="mb-8 flex items-center gap-3">
+              <div className="h-px w-10 bg-gold/80" />
+              <span className="text-[11px] font-light uppercase tracking-[0.3em] text-foreground/50">
+                Diferenciais
+              </span>
+            </div>
+            <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-light leading-[1.1] tracking-tight text-foreground">
+              O que torna o Ordixs
+              <br />
+              <span className="font-extralight italic text-foreground/50">incomparável.</span>
+            </h2>
+          </motion.div>
+        </div>
+
+        <div className="space-y-8">
+          <Carousel
+            setApi={setDifferentialsApi}
+            opts={{ align: "start", loop: true }}
+            className="group w-full"
+          >
+            <CarouselContent className="-ml-0">
+              {differentials.map((differential) => (
+                <CarouselItem key={differential.title} className="pl-0">
+                  <article className="relative min-h-[34rem] overflow-hidden border-y border-border/60 bg-navy-deep text-white md:min-h-[42rem]">
+                    <img
+                      src={differential.image}
+                      alt={differential.title}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/28 via-navy-deep/10 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/50 via-transparent to-transparent" />
+                    <div className="absolute inset-y-0 left-0 w-[78%] bg-gradient-to-r from-navy-deep/90 via-navy-deep/68 to-transparent md:w-[62%]" />
+
+                    <div className="relative grid min-h-[34rem] md:min-h-[42rem] md:grid-cols-[0.42fr_0.58fr]">
+                      <div className="flex min-h-[34rem] items-center py-12 pl-24 pr-8 md:min-h-[42rem] md:py-16 md:pl-28 md:pr-12 lg:pl-32">
+                        <motion.div
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={viewportOnce}
+                          variants={fadeUp}
+                          transition={smoothTransition}
+                          className="max-w-[31rem] space-y-8"
+                        >
+                          <h3 className="text-[clamp(2.35rem,4.2vw,4.35rem)] font-light leading-[0.98] tracking-tight text-white">
+                            {differential.title}
+                          </h3>
+
+                          <div className="h-px w-16 bg-gold/55" />
+
+                          <p className="text-[1.05rem] font-light leading-8 text-white/74 md:text-[1.16rem] md:leading-9">
+                            {differential.description}
+                          </p>
+
+                          <p className="text-[0.95rem] font-light leading-8 text-white/52 md:text-[1rem]">
+                            {differential.supporting}
+                          </p>
+                        </motion.div>
+                      </div>
+                      <div className="hidden md:block" />
+                    </div>
+                  </article>
+                </CarouselItem>
               ))}
+            </CarouselContent>
+
+            <CarouselPrevious className="!left-4 !top-1/2 z-10 h-12 w-12 rounded-none border border-white/12 bg-white/8 text-white/65 shadow-none backdrop-blur-md transition-colors hover:bg-white/14 hover:text-white md:!left-6 md:h-14 md:w-14" />
+            <CarouselNext className="!right-4 !top-1/2 z-10 h-12 w-12 rounded-none border border-white/12 bg-white/8 text-white/65 shadow-none backdrop-blur-md transition-colors hover:bg-white/14 hover:text-white md:!right-6 md:h-14 md:w-14" />
+          </Carousel>
+
+          <div className="container mx-auto flex justify-center px-8">
+            <div className="flex items-center gap-3">
+              {differentials.map((differential, index) => {
+                const isActive = index === activeDifferential;
+
+                return (
+                  <motion.button
+                    layout
+                    key={differential.title}
+                    type="button"
+                    onClick={() => differentialsApi?.scrollTo(index)}
+                    aria-label={`Ir para ${differential.title}`}
+                    whileHover={{ scaleX: 1.08 }}
+                    whileTap={{ scale: 0.96 }}
+                    className={`h-[2px] rounded-full transition-all duration-300 ${
+                      isActive ? "w-16 bg-gold" : "w-8 bg-foreground/14 hover:bg-foreground/25"
+                    }`}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Principles (white) */}
-      <section id="principios" className="py-32 md:py-44 bg-background">
+      <section id="planos" className="border-y border-border/60 bg-surface-muted py-32 md:py-44">
         <div className="container mx-auto px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-20 md:mb-24">
-              <div className="flex items-center justify-center gap-3 mb-8">
-                <div className="h-px w-10 bg-gold/80" />
-                <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
-                  Princípios
-                </span>
-                <div className="h-px w-10 bg-gold/80" />
-              </div>
-              <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-light tracking-tight text-foreground leading-[1.1]">
-                Construído sobre
-                <br />
-                <span className="italic font-extralight text-foreground/50">três pilares.</span>
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-12 md:gap-px md:bg-border/40 md:rounded-2xl md:overflow-hidden">
-              {principles.map((p) => (
-                <div
-                  key={p.label}
-                  className="md:bg-background p-10 md:p-14 text-center md:text-left"
-                >
-                  <p className="text-[11px] font-light text-gold tracking-[0.25em] uppercase mb-8">
-                    {p.label}
-                  </p>
-                  <p className="text-3xl md:text-4xl font-light tracking-tight text-foreground mb-6 leading-tight">
-                    {p.value}
-                  </p>
-                  <p className="text-sm font-light text-foreground/55 leading-relaxed max-w-xs mx-auto md:mx-0">
-                    {p.description}
-                  </p>
+          <div className="mx-auto max-w-6xl">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+              variants={fadeUp}
+              transition={smoothTransition}
+              className="mb-20 grid gap-10 md:mb-24 md:grid-cols-[0.95fr_1.05fr] md:items-end"
+            >
+              <div>
+                <div className="mb-8 flex items-center gap-3">
+                  <div className="h-px w-10 bg-gold/80" />
+                  <span className="text-[11px] font-light uppercase tracking-[0.3em] text-foreground/50">
+                    Modalidades
+                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Credibility (off-white) */}
-      <section className="py-32 md:py-44 bg-surface border-t border-border/60">
-        <div className="container mx-auto px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="max-w-3xl mb-20 md:mb-24">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="h-px w-10 bg-gold/80" />
-                <span className="text-[11px] font-light text-foreground/50 tracking-[0.3em] uppercase">
-                  Confiança
-                </span>
+                <h2 className="max-w-2xl text-[clamp(2rem,4.5vw,3.65rem)] font-light leading-[1.08] tracking-tight text-foreground">
+                  Estrutura clara.
+                  <br />
+                  <span className="font-extralight italic text-foreground/45">
+                    Evolução sem excesso.
+                  </span>
+                </h2>
               </div>
-              <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-light tracking-tight text-foreground leading-[1.1]">
-                Estabilidade que
-                <br />
-                <span className="italic font-extralight text-foreground/50">se sente.</span>
-              </h2>
-              <p className="text-base font-light text-foreground/60 leading-relaxed mt-8 max-w-xl">
-                Empresas que escolhem o Ordixs encontram uma plataforma onde segurança,
-                disponibilidade e conformidade são pressupostos — não diferenciais.
+              <p className="max-w-xl text-base font-light leading-[1.8] text-foreground/58 md:justify-self-end">
+                Três formatos para diferentes estágios da operação. Todos mantêm a mesma base de
+                clareza, suporte e consistência visual, variando apenas em profundidade, escala e
+                nível de personalização.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-              {credibility.map((c) => (
-                <div
-                  key={c.title}
-                  className="rounded-2xl bg-card border border-border/60 p-10 shadow-[var(--shadow-card)]"
+            <div className="space-y-8">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+                variants={stagger}
+                className="grid gap-5 lg:grid-cols-3"
+              >
+                {plans.map((plan) => {
+                  const isSelected = selectedPlan.name === plan.name;
+
+                  return (
+                    <motion.button
+                      key={plan.name}
+                      variants={fadeUp}
+                      transition={smoothTransition}
+                      whileHover={{ y: -4 }}
+                      whileTap={{ scale: 0.99 }}
+                      type="button"
+                      aria-pressed={isSelected}
+                      onClick={() => setSelectedPlan(plan)}
+                      className={`group relative flex min-h-[30rem] flex-col rounded-[1.75rem] border p-8 text-left shadow-[var(--shadow-card)] transition-all duration-300 md:p-10 ${
+                        isSelected
+                          ? "border-gold/35 bg-surface shadow-[var(--shadow-card-hover)]"
+                          : "border-border/70 bg-card hover:border-gold/20 hover:bg-surface/70"
+                      }`}
+                    >
+                      <div
+                        className={`absolute inset-y-8 left-0 w-px transition-colors duration-300 md:inset-y-10 ${
+                          isSelected ? "bg-gold" : "bg-transparent group-hover:bg-gold/35"
+                        }`}
+                      />
+
+                      <p className="mb-5 text-[10px] font-light uppercase tracking-[0.26em] text-gold/90">
+                        {plan.audience}
+                      </p>
+                      <h3 className="mb-6 text-3xl font-light tracking-tight text-foreground">
+                        {plan.name}
+                      </h3>
+                      <p className="mb-10 text-sm font-light leading-7 text-foreground/58">
+                        {plan.summary}
+                      </p>
+
+                      <ul className="mt-auto space-y-4 border-t border-border/60 pt-7">
+                        {plan.features.slice(0, 3).map((feature) => (
+                          <li key={feature} className="flex items-start gap-3">
+                            <Check className="mt-1 h-4 w-4 shrink-0 text-gold" strokeWidth={1.45} />
+                            <span className="text-sm font-light leading-relaxed text-foreground/62">
+                              {feature}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.button>
+                  );
+                })}
+              </motion.div>
+
+              <div className="flex flex-col gap-6 border-t border-border/60 pt-8 md:flex-row md:items-center md:justify-between">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={selectedPlan.name}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.28, ease: "easeOut" }}
+                    className="max-w-2xl text-sm font-light leading-7 text-foreground/58"
+                  >
+                    Seleção atual: <span className="text-foreground">{selectedPlan.name}</span>.{" "}
+                    {selectedPlan.outcome}
+                  </motion.p>
+                </AnimatePresence>
+
+                <motion.button
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group inline-flex w-fit items-center gap-3 rounded-full border border-border/70 bg-card px-6 py-3 text-sm font-light text-foreground shadow-[var(--shadow-card)] transition-all hover:border-gold/35 hover:text-gold"
                 >
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-surface-muted mb-10">
-                    <c.icon className="h-4 w-4 text-foreground/70" strokeWidth={1.5} />
-                  </div>
-                  <p className="text-[11px] font-light text-gold tracking-[0.25em] uppercase mb-4">
-                    {c.label}
-                  </p>
-                  <h3 className="text-xl font-light tracking-tight text-foreground mb-3">
-                    {c.title}
-                  </h3>
-                  <p className="text-sm font-light text-foreground/55 leading-relaxed">
-                    {c.description}
-                  </p>
-                </div>
-              ))}
+                  Encaminhar proposta
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    strokeWidth={1.5}
+                  />
+                </motion.button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA (dark) */}
-      <section className="py-32 md:py-48 bg-navy-deep text-white relative overflow-hidden">
+      <section className="relative overflow-hidden bg-navy-deep py-32 text-white md:py-48">
         <div
           className="absolute inset-0 opacity-30"
-          style={{ background: "radial-gradient(ellipse at center, oklch(0.74 0.1 78 / 0.18), transparent 70%)" }}
+          style={{
+            background:
+              "radial-gradient(ellipse at center, oklch(0.74 0.1 78 / 0.18), transparent 70%)",
+          }}
         />
         <div className="container relative mx-auto px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="flex items-center justify-center gap-3 mb-10">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={fadeUp}
+            transition={smoothTransition}
+            className="mx-auto max-w-3xl text-center"
+          >
+            <div className="mb-10 flex items-center justify-center gap-3">
               <div className="h-px w-10 bg-gold/60" />
-              <span className="text-[11px] font-light text-gold tracking-[0.3em] uppercase">
+              <span className="text-[11px] font-light uppercase tracking-[0.3em] text-gold">
                 Comece hoje
               </span>
               <div className="h-px w-10 bg-gold/60" />
             </div>
-            <h2 className="text-[clamp(2.25rem,5.5vw,4.5rem)] font-light tracking-tight leading-[1.05] mb-10">
+            <h2 className="mb-10 text-[clamp(2.25rem,5.5vw,4.5rem)] font-light leading-[1.05] tracking-tight">
               A próxima geração da
               <br />
-              <span className="italic font-extralight text-gold-soft">gestão corporativa.</span>
+              <span className="font-extralight italic text-gold-soft">gestão corporativa.</span>
             </h2>
-            <p className="text-lg font-light text-white/60 max-w-xl mx-auto mb-14 leading-relaxed">
-              Agende uma demonstração privada e descubra como o Ordixs eleva o padrão
-              operacional da sua empresa.
+            <p className="mx-auto mb-14 max-w-xl text-lg font-light leading-relaxed text-white/60">
+              Agende uma demonstração privada e descubra como o Ordixs eleva o padrão operacional da
+              sua empresa.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <button className="group inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-medium text-navy-deep transition-all hover:bg-gold">
+            <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
+              <motion.button
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="group inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-medium text-navy-deep transition-all hover:bg-gold"
+              >
                 Agendar demonstração
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
-              </button>
-              <button className="group inline-flex items-center gap-2 text-sm font-light text-white/80 hover:text-gold transition-colors">
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  strokeWidth={1.5}
+                />
+              </motion.button>
+              <motion.button
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                className="group inline-flex items-center gap-2 text-sm font-light text-white/80 transition-colors hover:text-gold"
+              >
                 Falar com consultor
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} />
-              </button>
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  strokeWidth={1.5}
+                />
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-navy-deep text-white/50 border-t border-white/10">
+      <footer className="border-t border-white/10 bg-navy-deep text-white/50">
         <div className="container mx-auto px-8 py-16">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-md border border-gold/40 flex items-center justify-center">
-                <span className="text-gold font-medium text-sm tracking-tight">O</span>
-              </div>
-              <span className="font-medium tracking-tight text-white text-base">Ordixs</span>
-            </div>
-            <div className="flex items-center gap-10 text-xs font-light tracking-wider uppercase">
-              <a href="#" className="hover:text-gold transition-colors">Privacidade</a>
-              <a href="#" className="hover:text-gold transition-colors">Termos</a>
-              <a href="#" className="hover:text-gold transition-colors">Contato</a>
+          <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+            <a href="#" aria-label="Ordixs" className="shrink-0">
+              <img src={logoImage} alt="Ordixs" className="h-8 w-auto opacity-95" />
+            </a>
+            <div className="flex items-center gap-10 text-xs font-light uppercase tracking-wider">
+              <a href="#" className="transition-colors hover:text-gold">
+                Privacidade
+              </a>
+              <a href="#" className="transition-colors hover:text-gold">
+                Termos
+              </a>
+              <a href="#" className="transition-colors hover:text-gold">
+                Contato
+              </a>
             </div>
           </div>
-          <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] font-light text-white/30 tracking-wider uppercase">
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 text-[11px] font-light uppercase tracking-wider text-white/30 md:flex-row">
             <span>© {new Date().getFullYear()} Ordixs</span>
             <span>Plataforma corporativa premium</span>
           </div>
