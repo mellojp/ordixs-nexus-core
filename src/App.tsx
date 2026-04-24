@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
@@ -12,12 +11,12 @@ import {
   Headset,
   Workflow,
 } from "lucide-react";
-import heroImage from "@/assets/hero-buildings.jpg";
-import logoImage from "@/assets/logo.png";
-import differentialInterfaceImage from "@/assets/differential-interface.png";
-import differentialModularImage from "@/assets/differential-modular.png";
-import differentialIntelligenceImage from "@/assets/differential-intelligence.png";
-import differentialImplementationImage from "@/assets/differential-implementation.png";
+import heroImage from "./assets/hero-buildings.jpg";
+import logoImage from "./assets/logo.png";
+import differentialInterfaceImage from "./assets/differential-interface.png";
+import differentialModularImage from "./assets/differential-modular.png";
+import differentialIntelligenceImage from "./assets/differential-intelligence.png";
+import differentialImplementationImage from "./assets/differential-implementation.png";
 import {
   Carousel,
   CarouselContent,
@@ -25,36 +24,11 @@ import {
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
-} from "@/components/ui/carousel";
-
-export const Route = createFileRoute("/")({
-  component: Index,
-  head: () => ({
-    meta: [
-      { title: "Ordixs — Gestão inteligente para sua empresa" },
-      {
-        name: "description",
-        content:
-          "Ordixs é a plataforma corporativa que unifica cadastros, operações, atendimento e comercial com a sofisticação de um produto premium.",
-      },
-      { property: "og:title", content: "Ordixs — Plataforma corporativa premium" },
-      {
-        property: "og:description",
-        content:
-          "Uma única plataforma para conduzir sua empresa com clareza, controle e elegância.",
-      },
-    ],
-  }),
-});
+} from "./components/ui/carousel";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
-};
-
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
 };
 
 const stagger = {
@@ -202,7 +176,7 @@ const differentials = [
   },
 ];
 
-function Index() {
+export default function App() {
   const [selectedPlan, setSelectedPlan] = useState(plans.find((plan) => plan.featured) ?? plans[0]);
   const [expandedModule, setExpandedModule] = useState(modules[0].number);
   const [differentialsApi, setDifferentialsApi] = useState<CarouselApi>();
@@ -308,13 +282,6 @@ function Index() {
       </section>
 
       <section id="plataforma" className="relative overflow-hidden bg-background py-32 md:py-48">
-        {/* <div
-          className="pointer-events-none absolute left-[-10%] top-[-35%] hidden h-[170%] w-[82%] rounded-[10rem] blur-[2px] md:block"
-          style={{
-            background: "oklch(0.96 0.018 94)",
-            transform: "rotate(-37deg)",
-          }}
-        /> */}
         <div className="container mx-auto px-8">
           <motion.div
             initial="hidden"
