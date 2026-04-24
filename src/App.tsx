@@ -41,7 +41,7 @@ const stagger = {
 };
 
 const viewportOnce = { once: true, amount: 0.22 };
-const smoothTransition = { duration: 0.55, ease: "easeOut" };
+const smoothTransition: any = { duration: 0.55, ease: [0, 0, 0.58, 1] }; // Equivalent to easeOut
 
 const modules = [
   {
