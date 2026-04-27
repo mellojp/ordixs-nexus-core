@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Transition, type Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
@@ -11,7 +11,7 @@ import {
   Headset,
   Workflow,
 } from "lucide-react";
-import heroImage from "./assets/hero-buildings.jpg";
+import heroImage from "./assets/hero-buildings-optimized.jpg";
 import logoImage from "./assets/logo.png";
 import differentialInterfaceImage from "./assets/differential-interface.png";
 import differentialModularImage from "./assets/differential-modular.png";
@@ -26,12 +26,12 @@ import {
   type CarouselApi,
 } from "./components/ui/carousel";
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
 };
 
-const stagger = {
+const stagger: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -41,7 +41,7 @@ const stagger = {
 };
 
 const viewportOnce = { once: true, amount: 0.22 };
-const smoothTransition: any = { duration: 0.55, ease: [0, 0, 0.58, 1] }; // Equivalent to easeOut
+const smoothTransition: Transition = { duration: 0.55, ease: [0, 0, 0.58, 1] };
 
 const modules = [
   {
@@ -120,7 +120,7 @@ const plans = [
     features: [
       "Todos os módulos integrados",
       "Usuários ilimitados",
-      "Suporte prioritário 12×6",
+      "Suporte prioritário 12x6",
       "Integrações personalizadas",
     ],
     featured: true,
@@ -203,21 +203,24 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
-      <section className="relative flex min-h-[100vh] items-center overflow-hidden bg-navy-deep text-white">
+      <section className="hero-section hero-ready relative flex min-h-[100svh] items-center overflow-hidden bg-[#101113] text-white">
         <div className="absolute inset-0">
           <img
             src={heroImage}
             alt="Arquitetura corporativa contemporânea"
             width={1920}
             height={1280}
-            className="h-full w-full object-cover opacity-40"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            className="hero-bg-image h-full w-full object-cover"
           />
           <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/50 to-transparent" />
         </div>
 
         <header className="absolute left-0 right-0 top-0 z-20 border-b border-white/8 bg-white/4 backdrop-blur-md">
-          <div className="container mx-auto flex items-center gap-6 px-6 py-5 md:px-8">
+          <div className="hero-header-content container mx-auto flex items-center gap-6 px-6 py-5 md:px-8">
             <a href="#" aria-label="Ordixs" className="shrink-0">
               <img src={logoImage} alt="Ordixs" className="h-8 w-auto md:h-9" />
             </a>
@@ -236,29 +239,24 @@ export default function App() {
           </div>
         </header>
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
-          className="container relative z-10 mx-auto px-8 pb-24 pt-36 md:pb-28 md:pt-40"
-        >
-          <motion.div variants={fadeUp} transition={smoothTransition} className="max-w-4xl">
-            <div className="mb-12 flex items-center gap-3">
+        <div className="container relative z-10 mx-auto px-8 pb-24 pt-36 md:pb-28 md:pt-40">
+          <div className="max-w-4xl">
+            <div className="hero-reveal hero-reveal-1 mb-12 flex items-center gap-3">
               <div className="h-px w-10 bg-gold/60" />
               <span className="text-[11px] font-light uppercase tracking-[0.3em] text-gold">
                 Plataforma Corporativa
               </span>
             </div>
-            <h1 className="mb-10 text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-[1.02] text-white">
+            <h1 className="hero-reveal hero-reveal-2 mb-10 text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-[1.02] text-white">
               Conduza sua empresa
               <br />
               <span className="font-extralight italic text-gold-soft">com clareza absoluta.</span>
             </h1>
-            <p className="mb-14 max-w-xl text-lg font-light leading-relaxed text-white/65 md:text-xl">
+            <p className="hero-reveal hero-reveal-3 mb-14 max-w-xl text-lg font-light leading-relaxed text-white/65 md:text-xl">
               Uma plataforma que unifica operações, processos e pessoas, desenhada para empresas que
               valorizam excelência.
             </p>
-            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+            <div className="hero-reveal hero-reveal-4 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
               <a
                 href="https://portal.ordixs.com.br/login"
                 className="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-navy-deep transition-all hover:bg-gold"
@@ -277,11 +275,14 @@ export default function App() {
                 />
               </button>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </section>
 
-      <section id="plataforma" className="relative overflow-hidden bg-background py-32 md:py-48">
+      <section
+        id="plataforma"
+        className="below-fold-section relative overflow-hidden bg-background py-32 md:py-48"
+      >
         <div className="container mx-auto px-8">
           <motion.div
             initial="hidden"
@@ -318,7 +319,10 @@ export default function App() {
         </div>
       </section>
 
-      <section id="modulos" className="border-y border-border/60 bg-surface py-32 md:py-44">
+      <section
+        id="modulos"
+        className="below-fold-section border-y border-border/60 bg-surface py-32 md:py-44"
+      >
         <div className="container mx-auto px-8">
           <motion.div
             initial="hidden"
@@ -452,7 +456,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="diferenciais" className="bg-background py-32 md:py-44">
+      <section id="diferenciais" className="below-fold-section bg-background py-32 md:py-44">
         <div className="container mx-auto mb-20 px-8 md:mb-28">
           <motion.div
             initial="hidden"
@@ -556,7 +560,10 @@ export default function App() {
         </div>
       </section>
 
-      <section id="planos" className="border-y border-border/60 bg-surface-muted py-32 md:py-44">
+      <section
+        id="planos"
+        className="below-fold-section border-y border-border/60 bg-surface-muted py-32 md:py-44"
+      >
         <div className="container mx-auto px-8">
           <div className="mx-auto max-w-6xl">
             <motion.div
@@ -590,27 +597,17 @@ export default function App() {
             </motion.div>
 
             <div className="space-y-8">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={viewportOnce}
-                variants={stagger}
-                className="grid gap-5 lg:grid-cols-3"
-              >
+              <div className="grid gap-5 lg:grid-cols-3">
                 {plans.map((plan) => {
                   const isSelected = selectedPlan.name === plan.name;
 
                   return (
-                    <motion.button
+                    <button
                       key={plan.name}
-                      variants={fadeUp}
-                      transition={smoothTransition}
-                      whileHover={{ y: -4 }}
-                      whileTap={{ scale: 0.99 }}
                       type="button"
                       aria-pressed={isSelected}
                       onClick={() => setSelectedPlan(plan)}
-                      className={`group relative flex min-h-[30rem] flex-col rounded-[1.75rem] border p-8 text-left shadow-[var(--shadow-card)] transition-all duration-300 md:p-10 ${
+                      className={`group relative flex min-h-[30rem] flex-col rounded-[1.75rem] border p-8 text-left shadow-[var(--shadow-card)] transition-[background-color,border-color,box-shadow] duration-300 md:p-10 ${
                         isSelected
                           ? "border-gold/35 bg-surface shadow-[var(--shadow-card-hover)]"
                           : "border-border/70 bg-card hover:border-gold/20 hover:bg-surface/70"
@@ -642,10 +639,10 @@ export default function App() {
                           </li>
                         ))}
                       </ul>
-                    </motion.button>
+                    </button>
                   );
                 })}
-              </motion.div>
+              </div>
 
               <div className="flex flex-col gap-6 border-t border-border/60 pt-8 md:flex-row md:items-center md:justify-between">
                 <AnimatePresence mode="wait">
@@ -679,7 +676,7 @@ export default function App() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-navy-deep py-32 text-white md:py-48">
+      <section className="below-fold-section relative overflow-hidden bg-navy-deep py-32 text-white md:py-48">
         <div
           className="absolute inset-0 opacity-30"
           style={{

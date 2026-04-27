@@ -86,8 +86,10 @@
   --gradient-hero: linear-gradient(135deg, oklch(0.16 0.035 260 / 0.85), oklch(0.2 0.04 265 / 0.7));
   --gradient-gold: linear-gradient(135deg, oklch(0.78 0.1 82), oklch(0.7 0.1 76));
   --shadow-elegant: 0 30px 80px -40px oklch(0.2 0.035 260 / 0.18);
-  --shadow-card: 0 1px 2px oklch(0.2 0.035 260 / 0.04), 0 8px 24px -12px oklch(0.2 0.035 260 / 0.06);
-  --shadow-card-hover: 0 4px 8px oklch(0.2 0.035 260 / 0.04), 0 24px 48px -16px oklch(0.2 0.035 260 / 0.12);
+  --shadow-card:
+    0 1px 2px oklch(0.2 0.035 260 / 0.04), 0 8px 24px -12px oklch(0.2 0.035 260 / 0.06);
+  --shadow-card-hover:
+    0 4px 8px oklch(0.2 0.035 260 / 0.04), 0 24px 48px -16px oklch(0.2 0.035 260 / 0.12);
   --shadow-gold: 0 16px 40px -16px oklch(0.74 0.1 78 / 0.45);
 }
 
@@ -116,7 +118,85 @@
     letter-spacing: -0.01em;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     letter-spacing: -0.035em;
+  }
+}
+
+@layer utilities {
+  .hero-bg-image {
+    opacity: 0.4;
+  }
+
+  .hero-header-content {
+    animation: hero-header-content-in 520ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+    animation-play-state: paused;
+  }
+
+  .hero-reveal {
+    animation: hero-content-in 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-play-state: paused;
+  }
+
+  .hero-ready .hero-header-content,
+  .hero-ready .hero-reveal {
+    animation-play-state: running;
+  }
+
+  .hero-reveal-1 {
+    animation-delay: 120ms;
+  }
+
+  .hero-reveal-2 {
+    animation-delay: 200ms;
+  }
+
+  .hero-reveal-3 {
+    animation-delay: 280ms;
+  }
+
+  .hero-reveal-4 {
+    animation-delay: 360ms;
+  }
+
+  .below-fold-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+
+  @keyframes hero-header-content-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -12px, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes hero-content-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 16px, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-header-content,
+    .hero-reveal {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
   }
 }
